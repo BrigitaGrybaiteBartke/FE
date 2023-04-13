@@ -39,7 +39,7 @@ const Login = () => {
     return (
         <>
     
-            <article className="article login w-50">
+            <article className="article login w-75">
                 <h1>Please Login</h1>
                 <form
                     onSubmit={login}

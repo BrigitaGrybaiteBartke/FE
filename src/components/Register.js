@@ -42,7 +42,7 @@ const Register = () => {
 
     return (
         <>
-            <article className="article login">
+            <article className="article w-75">
                 <h1>Please Register</h1>
                 <form
                     onSubmit={handleSubmit}
