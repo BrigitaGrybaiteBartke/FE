@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
-import { IoMdPerson } from 'react-icons/io';
 import { RxPerson } from 'react-icons/rx';
 
 
@@ -11,10 +10,8 @@ const Header = () => {
 
     return (
         <>
-
             <nav className="navbar sticky-top navbar-expand-lg bg-body-tertiary bg-light" background="#e3f2fd">
                 <div className="container-fluid">
-
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
@@ -34,9 +31,9 @@ const Header = () => {
                         {!auth.isLoggedin() ? (
                             <ul className='navbar-nav d-flex'>
                                 <li className="nav-item dropdown dropstart">
-                                    <Link className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <NavLink className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <RxPerson />
-                                    </Link>
+                                    </NavLink>
                                     <ul className="dropdown-menu">
                                         <li>
                                             <NavLink className="nav-link" aria-current="page" to="/login">Login</NavLink>
@@ -60,7 +57,6 @@ const Header = () => {
                                     >
                                         Logout
                                     </NavLink>
-
                                 </li>
                             </ul>
                         )}
