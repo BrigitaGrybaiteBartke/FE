@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 
 const Register = () => {
@@ -85,7 +85,7 @@ const Register = () => {
                     </div>
                     <div className='text-center'>
                         <p>
-                            Already a member? <Link className='' to="/login">Login</Link>
+                            Already a member? <NavLink className='' to="/login">Login</NavLink>
                         </p>
                     </div>
                 </form>

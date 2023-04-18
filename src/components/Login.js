@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import axios from 'axios';
 import { MessagesContext } from './context/MessagesContext';
@@ -73,7 +73,7 @@ const Login = () => {
 
                     <div className='text-center'>
                         <p>
-                            Not a member? <Link className='' to="/register">Register</Link>
+                            Not a member? <NavLink className='' to="/register">Register</NavLink>
                         </p>
 
 
