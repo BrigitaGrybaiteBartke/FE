@@ -13,11 +13,14 @@ import Home from './components/Home';
 import Posts from './components/Posts';
 import SinglePost from './components/SinglePost';
 import Login from './components/Login';
+import Wildcard from './components/Wildcard';
 import Register from './components/Register';
 import { AuthProvider } from './components/context/AuthContext';
 import MessagesProvider from './components/context/MessagesContext';
 import LoadingProvider from './components/context/LoadingContext';
 import Dashboard from './components/Dashboard';
+import Update from './components/Update';
+import CreateNewPost from './components/CreateNewPost';
 
 
 function App() {
@@ -27,7 +30,6 @@ function App() {
         <Header />
         <MessagesProvider>
           <LoadingProvider>
-
             <Routes>
               <Route path='/' element={<Navigate to="/home" />} />
               <Route path='/home' element={<Home />} />
@@ -39,20 +41,14 @@ function App() {
               <Route path='/posts' element={<Posts />} />
               <Route path='/posts/:id' element={<SinglePost />} />
 
-
-              <Route path='/admin' element={<Dashboard />} />
-
-              <Route path='/posts/search/{id}' element={<Posts />} />;
-
+              {/* authenticated user's post */}
+              <Route path='/user/posts' element={<Dashboard />} />
+              <Route path='/user/posts/update/:id' element={<Update />} />
+              <Route path='/user/posts/new' element={<CreateNewPost />} />
 
               {/* wildcard */}
-              <Route path="*"
-                element={
-                  <main style={{ padding: "1rem" }}>
-                    <p>There's nothing here!</p>
-                  </main>
-                }
-              />
+              <Route path="*" element={<Wildcard />} />
+                
             </Routes>
           </LoadingProvider>
         </MessagesProvider>
