@@ -2,6 +2,11 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { MessagesContext } from './context/MessagesContext';
+import { LoadingContext } from './context/LoadingContext';
+
 
 const Register = () => {
 
@@ -9,79 +14,115 @@ const Register = () => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({ name: "", email: "", password: "", password_confirmation: "" });
 
+    const { setAlert } = useContext(MessagesContext)
+    const { setLoading } = useContext(LoadingContext)
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const handleError = (errors) => { console.log(errors) };
+
     const handleData = (e) => {
         const value = e.target.value
         setUserInfo({ ...userInfo, [e.target.name]: value })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://127.0.0.1:8000/api/register', userInfo)
+    const handleRegistration = (data, e) => {
+        // e.preventDefault()
+        setLoading(true)
+        axios.post('http://127.0.0.1:8000/api/register', data)
             .then(resp => {
-                console.log(resp.data)
                 auth.login(resp.data.data.user, resp.data.data.token)
-                navigate("/");
+                navigate('/user/posts')
+                setAlert({ message: 'Registration successfully!' })
             })
-            .catch(error => {
-                console.error(error.response.data);
-            });
+            .catch(err => {
+                setAlert({ message: err.response.data.message, warning: true })
+            })
+            .finally(() => setLoading(false))
     }
 
 
     return (
         <>
             <div className='container'>
-                <div>
+                <div className='mt-5 mb-3'>
                     <h5 className='text-center'>Register form</h5>
                 </div>
 
                 <form
-                    className='d-flex flex-column align-items-center'
-                    onSubmit={handleSubmit}
+                    className='d-flex flex-column align-items-center' noValidate
+                    onSubmit={handleSubmit(handleRegistration, handleError)}
                 >
-                    <div className="form-floating col-4 mb-4">
+                    <div className="form-floating col-4 mb-4 text-secondary">
                         <input
-                            className="form-control"
+                            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                             placeholder="name"
                             type="text"
                             name="name"
                             onChange={handleData}
+                            {...register('name', { required: true })}
                         />
-                        <label for="floatingInput">Name</label>
+                        <label htmlFor="floatingInput">Name</label>
+                        {errors.name && errors.name.type === "required" && <div className='invalid-feedback'>* Name field is required</div>}
                     </div>
-                    <div class="form-floating col-4 mb-4">
+                    <div className="form-floating col-4 mb-4 text-secondary">
                         <input
-                            className="form-control"
+                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                             placeholder="name@example.com"
                             type="email"
                             name="email"
                             onChange={handleData}
+                            {...register('email', {
+                                required: true, pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                    message: "* Invalid Email"
+                                }
+                            })}
                         />
-                        <label for="floatingInput">Email address</label>
+                        <label htmlFor="floatingInput">Email address</label>
+                        {errors.email && errors.email.type === "required" && <div className='invalid-feedback'>* Email field is required</div>}
+                        {errors.email && errors.email.type === "pattern" && <div className='invalid-feedback'>{errors.email.message}</div>}
                     </div>
-                    <div className="form-floating col-4 mb-2">
+                    <div className="form-floating col-4 mb-4 text-secondary">
                         <input
-                            className="form-control"
+                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                             placeholder="Password"
                             type="password"
                             name="password"
                             onChange={handleData}
+                            {...register('password', { required: true, minLength: 8 })}
                         />
-                        <label for="floatingPassword">Password</label>
+                        <label htmlFor="floatingPassword">Password</label>
+                        {errors.password && errors.password.type === "required" && <div className='invalid-feedback'>* Password field is required</div>}
+                        {errors.password && errors.password.type === "minLength" && <div className='invalid-feedback'>* Password must have at least 8 characters</div>}
                     </div>
-                    <div className="form-floating col-4 mb-2">
+                    <div className="form-floating col-4 mb-2 text-secondary">
                         <input
-                            className="form-control"
+                            className={`form-control ${errors.password_confirmation ? 'is-invalid' : ''}`}
                             placeholder="Password Confirmation"
                             type="password"
                             name="password_confirmation"
                             onChange={handleData}
-
+                            {...register('password_confirmation', {
+                                required: true, validate: (val: string) => {
+                                    if (watch('password') !== val) {
+                                        return "* Passwords does not match"
+                                    }
+                                }
+                            }
+                            )}
                         />
-                        <label for="floatingPasswordConfirmation">Password Confirmation</label>
+                        <label htmlFor="floatingPasswordConfirmation">Password Confirmation</label>
+                        {errors.password_confirmation && errors.password_confirmation.type === "required" && <div className='invalid-feedback'>* Password confirmation field is required</div>}
+                        {errors.password_confirmation && errors.password_confirmation.type === "validate" && <div className='invalid-feedback'>{errors.password_confirmation.message}</div>}
                     </div>
                     <div className='d-grid gap-2 col-4 mx-auto mb-3'>
-                        <button type="submit" className="btn btn-primary mt-3"> Sign in</button>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            type="submit" className="btn btn-primary mt-3"
+                        >
+                            Sign in
+                        </motion.button>
                     </div>
                     <div className='text-center'>
                         <p>

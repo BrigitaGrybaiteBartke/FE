@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 
 const Login = () => {
 
-
     const auth = useContext(AuthContext);
     const { setAlert } = useContext(MessagesContext)
 
@@ -20,31 +19,16 @@ const Login = () => {
 
     const [data, setData] = useState({})
 
-
-
-
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleError = (errors) => { console.log(errors) };
-
-    const registerOptions = {
-        email: { required: "* Email field is required" },
-        password: {
-            required: "* Password field is required"
-        }
-    };
-
-
 
     const handleData = (e) => {
         const value = e.target.value
         setData({ ...data, [e.target.name]: value })
-
     }
-
 
     const login = (data, e) => {
         // e.preventDefault()
-        // console.log(e)
         // console.log(data)
         setLoading(true)
         axios.post('http://127.0.0.1:8000/api/login', data, { headers: headers })
@@ -54,56 +38,47 @@ const Login = () => {
                 setAlert({ message: 'Login successfully!' })
             })
             .catch(err => {
-                // console.log(err.response.data.message)
                 setAlert({ message: err.response.data.message, warning: true })
             })
             .finally(() => setLoading(false))
-
     }
 
 
     return (
         <>
             <div className='container'>
-                <div className='mt-5'>
+                <div className='mt-5 mb-3'>
                     <h5 className='text-center'>Login Form</h5>
                 </div>
-
                 <form
                     className='d-flex flex-column align-items-center' noValidate
-                    // onSubmit={login}
                     onSubmit={handleSubmit(login, handleError)}
                 >
-                    <div class="form-floating col-4 mb-4">
+                    <div class="form-floating col-4 mb-4 text-secondary">
                         <input
-                            className="form-control mb-1"
+                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                             placeholder="name@example.com"
                             type="email"
                             name="email"
                             onChange={handleData}
-                            {...register('email', registerOptions.email)}
+                            {...register('email', { required: true })}
                         />
-                        <label for="floatingInput">Email address</label>
-                        <small className="text-danger">
-                            {errors?.email && errors.email.message}
-                        </small>
-
+                        <label htmlFor="floatingInput">Email address</label>
+                        {errors.email && errors.email.type === "required" && <div className='invalid-feedback'>* Email field is required</div>}
                     </div>
-                    <div className="form-floating col-4 mb-2">
+                    <div className="form-floating col-4 mb-2 text-secondary">
                         <input
-                            className="form-control mb-1"
+                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                             placeholder="Password"
                             type="password"
                             name="password"
                             onChange={handleData}
-                            {...register('password', registerOptions.password)}
+                            {...register('password', { required: true })}
                         />
-                        <label for="floatingPassword" >Password</label>
-                        <small className="text-danger">
-                            {errors?.password && errors.password.message}
-                        </small>
+                        <label htmlFor="floatingPassword" >Password</label>
+                        {errors.password && errors.password.type === "required" && <div className='invalid-feedback'>* Password field is required</div>}
                     </div>
-                    <div className='d-grid gap-2 col-4 mx-auto mb-3'>
+                    <div className='d-grid gap-2 col-4 mx-auto mb-3 text-secondary'>
                         <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
