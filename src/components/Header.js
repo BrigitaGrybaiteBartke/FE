@@ -10,15 +10,28 @@ const Header = () => {
 
     return (
         <>
-            <nav className="navbar sticky-top navbar-expand-lg bg-body-tertiary bg-light" background="#e3f2fd">
-                <div className="container-fluid">
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} aria-current="page" to="/home">Home</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} aria-current="page" to="/posts">Posts</NavLink>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <NavLink to="./" class="navbar-brand">
+                        <img
+                            src="https://knockknockwhoisthere.files.wordpress.com/2018/03/dotblog.png"
+                            alt="Bootstrap"
+                            width="100"
+                        />
+
+                        {auth.isLoggedin() ? (
+                            <span className="text-secondary">{`${auth.getUser().name}, welcome`}</span>
+                        ) : (null)
+                        }
+
+                    </NavLink>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggler">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} aria-current="page" to="/posts">Home</NavLink>
                             </li>
 
                             {auth.isLoggedin() ? (
@@ -29,10 +42,11 @@ const Header = () => {
                         </ul>
 
                         {!auth.isLoggedin() ? (
-                            <ul className='navbar-nav d-flex'>
+                            <ul class="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item dropdown dropstart">
                                     <NavLink className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <RxPerson />
+                                        {/* <RxPerson /> */}
+                                        .new BLOGpost
                                     </NavLink>
                                     <ul className="dropdown-menu">
                                         <li>
@@ -45,10 +59,8 @@ const Header = () => {
                                 </li>
                             </ul>
                         ) : (
-                            <ul className='navbar-nav d-flex'>
-                                <li className="nav-item">
-                                    <span className="nav-link mx-4">{`Hello, ${auth.getUser().name}`}</span>
-                                </li>
+                            <ul class="navbar-nav mb-2 mb-lg-0">
+
                                 <li className="nav-item">
                                     <NavLink
                                         className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} aria-current="page"
@@ -65,7 +77,6 @@ const Header = () => {
             </nav>
 
         </>
-
     )
 }
 export default Header;
