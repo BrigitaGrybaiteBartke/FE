@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Comments from './Comments';
+import { AuthContext } from './context/AuthContext';
 import { LoadingContext } from './context/LoadingContext';
-import './Post.css';
+import './SinglePost.css';
 
 
 const SinglePost = () => {
+    const auth = useContext(AuthContext);
 
     const { setLoading } = useContext(LoadingContext)
     const { id } = useParams()
@@ -20,7 +22,6 @@ const SinglePost = () => {
 
         axios.get('http://127.0.0.1:8000/api/posts/' + id)
             .then(resp => {
-                // console.log(resp.data.comments)
                 setPost(resp.data.attributes)
                 setComments(resp.data.comments)
             })
@@ -32,36 +33,45 @@ const SinglePost = () => {
 
     return (
         <>
-        
-            <div className='section'>
-
+            <div className='section-single-post'>
                 <div className='container'>
-
                     <article className="article">
+                        
                         <div className="article-title">
-                            <div className="date text-secondary">{new Date(post.created_at).toLocaleDateString('en', {
+                            <div className="date text-secondary ">{new Date(post.created_at).toLocaleDateString('en', {
                                 month: 'long',
                                 day: 'numeric',
                                 year: 'numeric'
                             })}</div>
-                            <h1>{post.title}</h1>
+                            <h1 className=''>{post.title}</h1>
                         </div>
-
                         <div className="article-img">
                             <img src={post.image_path} title={post.title} alt={post.title} />
                         </div>
 
                         <div className="article-content">
-                            <p className='lh-lg'>{post.body}</p>
+                            <div className='article-content-body'>
+                                <p className='lh-lg'>{post.body}</p>
+
+                            </div>
 
 
+
+                            <div className='article-content-comments'>
+
+                            </div>
                             {/* comments */}
+
+
+
+
+
                             <div className='comment mt-5'>
                                 <div className="comment-title">
                                     <h5>Comments</h5>
                                 </div>
                                 <div className='comment-body'>
-                                    <ul class="list-group list-group-flush">
+                                    <ul className="list-group list-group-flush">
                                         {Array.isArray(comments)
                                             ? comments.map(comment => {
                                                 return <Comments
@@ -73,18 +83,12 @@ const SinglePost = () => {
                                     </ul>
                                 </div>
 
-                                <form action='' method=''>
-                                    <div className="form-floating">
-                                        <textarea className="form-control" placeholder="Leave a comment here" id="leaveComment" height="100px"></textarea>
-                                        <label for="leaveComment">Leave a comment here...</label>
-                                    </div>
-                                </form>
-
-
-
 
                             </div>
 
+
+
+                            {/* content end */}
                         </div>
                         <div className="mt-5">
                             <Link to={'/posts'} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">

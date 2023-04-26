@@ -19,19 +19,21 @@ const Post = ({ data }) => {
                             <img src={data.image_path} alt={data.title} className="w-100" />
                         </NavLink>
                     </div>
-
                     <div className="blog-card-info">
                         <div className='info-title'>
                             <h5><NavLink to={'/posts/' + data.id}>{data.title}</NavLink></h5>
                         </div>
                         <div className='info-body'>
-                            <p>{data.body.split(' ').splice(0, 15).join(' ') + ' [...]'}</p>
+                            {(data.body).match(/[^\S\r\n]|\S/g).length >= 150
+                                ? <p>{data.body.split(' ').splice(0, 15).join(' ') + ' [...]'}</p>
+                                : <p>{data.body + ' [...]'}</p>
+                            }
                         </div>
-                        <div className="read d-flex justify-content-between">
+                        <div className="continue-reading d-flex justify-content-between">
                             <NavLink to={'/posts/' + data.id} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                                 <span>Continue reading <IoIosArrowRoundForward /></span>
                             </NavLink>
-                            <div>
+                            <div className='min-t'>
                                 <span className='text-secondary'>{data.min_to_read} min read</span>
                             </div>
                         </div>
@@ -39,7 +41,6 @@ const Post = ({ data }) => {
                 </div>
             </div>
         </>
-
     )
 };
 

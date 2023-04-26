@@ -24,20 +24,21 @@ const Posts = () => {
 
     return (
         <>
-            <div className='container'>
-                <div className="row justify-content-center">
-                    {Array.isArray(posts)
-                        ? posts.map(data => {
-                            return <Post
-                                key={data.id}
-                                data={data.attributes}
-                            />
-                        })
-                        : null
-                    }
+            <div className='section-main'>
+                <div className='container'>
+                    <div className="row justify-content-center">
+                        {Array.isArray(posts)
+                            ? posts.map(data => {
+                                return <Post
+                                    key={data.id}
+                                    data={data.attributes}
+                                />
+                            })
+                            : null
+                        }
+                    </div>
                 </div>
             </div>
-
         </>
     );
 };

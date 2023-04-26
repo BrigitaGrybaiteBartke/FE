@@ -22,6 +22,10 @@
     top: 10px;
 }
 
+.blog-card .blog-card-info {
+    padding: 10px;
+}
+
 .blog-card .blog-card-info .info-title {
     font-size: 22px;
 }
@@ -31,6 +35,10 @@
     text-decoration: none;
 }
 
-.blog-card .blog-card-info .info-body {
+.blog-card .blog-card-info .info-body p {
     height: 50px;
+}
+
+.blog-card .blog-card-info .continue-reading {
+    padding-top: 15px;
 }
