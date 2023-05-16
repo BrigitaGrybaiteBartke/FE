@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const AddCommentForm = ({ submitLabel, handleSubmit, isLoggedin }) => {
-
     const ref = useRef(null);
     const [newComment, setNewComment] = useState('')
     const isTextAreaDisabled = newComment.length === 0

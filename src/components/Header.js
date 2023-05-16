@@ -3,10 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import myImage from '../images/blogImage.png'
 
-
 const Header = () => {
     const auth = useContext(AuthContext);
-
+    
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">

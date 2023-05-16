@@ -7,7 +7,6 @@ import { MessagesContext } from './context/MessagesContext';
 import ImageUpload from './ImageUpload';
 import { useForm } from 'react-hook-form';
 
-
 const UpdatePost = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate()
@@ -15,10 +14,6 @@ const UpdatePost = () => {
     const { setLoading } = useContext(LoadingContext)
     const { setAlert } = useContext(MessagesContext)
     const { id } = useParams()
-
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const handleError = (errors) => { console.log(errors) };
-
     const [postData, setPostData] = useState({
         title: '',
         excerpt: '',
@@ -27,6 +22,8 @@ const UpdatePost = () => {
         image_path: ''
     })
 
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const handleError = (errors) => { console.log(errors) };
 
     useEffect(() => {
         setLoading(true)
@@ -49,7 +46,6 @@ const UpdatePost = () => {
         }
     }, [id, token])
 
-
     const handleInputChange = (e) => {
         setPostData({ ...postData, [e.target.name]: e.target.value })
     }
@@ -58,9 +54,9 @@ const UpdatePost = () => {
         setPostData({ ...postData, image_path: file });
     }
 
-
     const handlePostUpdate = (data, e) => {
         setLoading(true)
+        
         const formData = new FormData();
         formData.append("title", postData.title);
         formData.append("excerpt", postData.excerpt);

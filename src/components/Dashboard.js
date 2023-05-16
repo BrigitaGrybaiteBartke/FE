@@ -8,14 +8,12 @@ import { RxPencil1 } from 'react-icons/rx';
 import { CgPlayListAdd } from 'react-icons/cg';
 import { MessagesContext } from './context/MessagesContext';
 
-
 const Dashboard = () => {
     const auth = useContext(AuthContext);
     const { setAlert } = useContext(MessagesContext)
     const token = auth.getToken();
     const { setLoading } = useContext(LoadingContext)
     const [posts, setPosts] = useState([])
-
 
     useEffect(() => {
         setLoading(true)
@@ -33,13 +31,11 @@ const Dashboard = () => {
                 })
                 .finally(() => setLoading(false))
         }
-
         if (token) {
             fetchData();
         }
     }, [token])
 
-    
     const handleDelete = (id, e) => {
         axios.delete('http://127.0.0.1:8000/api/user/posts/' + id, {
             headers: {
@@ -52,7 +48,6 @@ const Dashboard = () => {
                     setPosts(remaining)
                 }
                 setAlert({ message: 'Post deleted successfully!' })
-
             })
             .catch(err => {
                 setAlert({ message: err.response.data.message, warning: true })

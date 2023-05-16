@@ -2,7 +2,6 @@ import React from 'react';
 import { BsDot } from 'react-icons/bs';
 
 const Comment = ({ comment, commentAuthor }) => {
-
     return (
         <>
             <div className="card mb-3 border-0">

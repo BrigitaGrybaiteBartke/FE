@@ -1,4 +1,3 @@
-
 const ImageUpload = ({ onImageSelected, register, errors }) => {
 
     const handleFileSelect = (e) => {

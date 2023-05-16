@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Wildcard = () => {
-    
         return (
         <>
             <div className="container flex-column d-flex align-items-center mt-5">

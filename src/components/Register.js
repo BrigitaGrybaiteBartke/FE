@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { MessagesContext } from './context/MessagesContext';
 import { LoadingContext } from './context/LoadingContext';
 
-
 const Register = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
@@ -152,7 +151,6 @@ const Register = () => {
                     </div>
                 </form>
             </div>
-
         </>
     );
 };

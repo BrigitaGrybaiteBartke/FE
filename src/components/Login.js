@@ -7,7 +7,6 @@ import { LoadingContext } from './context/LoadingContext';
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
-
 const Login = () => {
     const auth = useContext(AuthContext);
     const { setAlert } = useContext(MessagesContext)

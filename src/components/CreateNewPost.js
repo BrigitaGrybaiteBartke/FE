@@ -7,7 +7,6 @@ import { MessagesContext } from './context/MessagesContext';
 import ImageUpload from './ImageUpload';
 import { useForm } from 'react-hook-form';
 
-
 const CreateNewPost = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate()
