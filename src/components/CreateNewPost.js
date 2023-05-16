@@ -54,6 +54,7 @@ const CreateNewPost = () => {
         })
             .then(resp => {
                 navigate('/user/posts')
+                setAlert({ message: 'Post created successfully!' })
             })
             .catch(err => {
                 setAlert({ message: err.response.data.message, warning: true })

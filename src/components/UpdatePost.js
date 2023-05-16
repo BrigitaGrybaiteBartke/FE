@@ -78,6 +78,7 @@ const UpdatePost = () => {
         })
             .then(resp => {
                 navigate('/user/posts')
+                setAlert({ message: 'Post updated successfully!' })
             })
             .catch(err => {
                 setAlert({ message: err.response.data.message, warning: true })

@@ -6,10 +6,12 @@ import { LoadingContext } from './context/LoadingContext';
 import { CgRemove } from 'react-icons/cg';
 import { RxPencil1 } from 'react-icons/rx';
 import { CgPlayListAdd } from 'react-icons/cg';
+import { MessagesContext } from './context/MessagesContext';
 
 
 const Dashboard = () => {
     const auth = useContext(AuthContext);
+    const { setAlert } = useContext(MessagesContext)
     const token = auth.getToken();
     const { setLoading } = useContext(LoadingContext)
     const [posts, setPosts] = useState([])
@@ -26,8 +28,8 @@ const Dashboard = () => {
                 .then(resp => {
                     setPosts(resp.data)
                 })
-                .catch(error => {
-                    console.log(error)
+                .catch(err => {
+                    setAlert({ message: err.response.data.message, warning: true })
                 })
                 .finally(() => setLoading(false))
         }
@@ -37,11 +39,11 @@ const Dashboard = () => {
         }
     }, [token])
 
+    
     const handleDelete = (id, e) => {
         axios.delete('http://127.0.0.1:8000/api/user/posts/' + id, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                // 'Content-Type': 'multipart/form-data'
             }
         })
             .then(resp => {
@@ -49,9 +51,11 @@ const Dashboard = () => {
                     const remaining = posts.filter((p) => p.id !== id)
                     setPosts(remaining)
                 }
+                setAlert({ message: 'Post deleted successfully!' })
+
             })
-            .catch(error => {
-                console.log(error)
+            .catch(err => {
+                setAlert({ message: err.response.data.message, warning: true })
             })
     }
 
