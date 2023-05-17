@@ -29,7 +29,7 @@ const Posts = () => {
                         {Array.isArray(posts)
                             ? posts.map(data => {
                                 return <Post
-                                    key={data.id}
+                                    key={data.post_id}
                                     data={data.attributes}
                                 />
                             })

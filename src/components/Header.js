@@ -5,17 +5,18 @@ import myImage from '../images/blogImage.png'
 
 const Header = () => {
     const auth = useContext(AuthContext);
-    
+
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg bg-light bg-gradient sticky-top">
                 <div className="container-fluid">
                     <NavLink to="./" className="navbar-brand">
-                        <img
+                        {/* <img
                             src={myImage}
                             alt="Bootstrap"
                             width="100"
-                        />
+                        /> */}
+                        <span className='fs-2 text fw-bold'>.blog&nbsp;&nbsp;</span>
                         {auth.isLoggedin() ? (
                             <span
                                 className="text-secondary">
